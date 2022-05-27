@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="boardSQL">
+ 	<!-- 강압적으로 끼워넣는다? 뭘 강압적으로 끼워넣는다는거지????? -->
+	<!-- <resultMap type="boarddto" id="boardResult"> UserDTO class와 강제 mapping하겠다.
+		<result property = "name " column="NAME"/> 지금은 이름이 같지만, 이름이 같지 않을 경우 이렇게 짝을 지어서 넣어주면 된다.라고 설정해두는 것이죠.
+		<result property = "id" column="ID"/> 
+		<result property = "pwd" column="PWD"/>
+		@@@@@ 여기 쓴다고 생각하고 추가적으로 수정하기 @@@@@@@@@ 
+	</resultMap>
+	 -->
+
+	<insert id="boardWrite" parameterType="boarddto">
+		insert into board values(SEQ_BOARD.NEXTVAL,
+								#{id},
+								#{name},
+								#{email},
+								#{subject},
+								#{content},
+								SEQ_BOARD.CURRVAL,
+								0,
+								0,
+								0,
+								0,
+								0,
+								SYSDATE
+		) <!-- dto에서 name이랑 id, pwd 찾아서 매핑해서 insert 하는거겠죠 -->
+	</insert> <!-- insert가 sql에서의 insert의 의미일까 아니면, xml에 추가시킨다는 의미의 insert일까? -->
+	
+	<select id="getBoardAll" resultType="boarddto">
+		select * from board
+	</select>
+	
+	<select id="getTotalBoardNum" resultType="java.lang.Integer">
+		select count(*) from board
+	</select>
+	
+	<select id="getBoardRange" parameterType="java.util.Map" resultType="boarddto">
+		select * from (select rownum rn, tt.* from 
+			(select * from board order by ref desc, step asc)tt) where rn &gt;= ${startNum} and rn &lt;= ${endNum}
+	</select>
+	
+	<select id="getBoardBySeq" parameterType="java.lang.Integer" resultType="boarddto">
+		select * from board where seq = ${seq}
+	</select>
+	
+	
+	<update id="increaseBoardHit" parameterType="java.lang.Integer">
+		UPDATE board SET HIT = (HIT +1) WHERE seq = ${seq}	
+	</update>
+
+	<!-- seq를 받아와야해 id도 안돼 그럼 그 사람이 쓴 글 다 수정되잖아 무조건 seq-->
+	<update id="boardUpdate" parameterType="boarddto">
+		UPDATE board SET subject = #{subject}, content = #{content} WHERE seq = ${seq}	
+	</update>
+
+	<!--  -->
+	<update id="boardReply1" parameterType="boarddto">
+		<!-- 답글을 달았을 때, 원글의 step보다 높은 튜플의 step을 갖고 있고 원글의 ref랑 동일한 튜플의 step값을 1증가시켜준다-->
+		UPDATE board SET step = step+1 WHERE ref = ${ref} AND step > ${step}	
+	</update>
+	
+	<insert id="boardReply2" parameterType="java.util.Map">
+		insert into board values(SEQ_BOARD.NEXTVAL,
+								#{id},<!-- sessionID -->
+								#{name},<!-- sessionName -->
+								#{email},<!-- sessionEmail -->
+								#{subject},<!-- form.subject -->
+								#{content},<!-- form.contetn -->
+								#{ref},<!-- sessionID -->
+								#{lev},<!-- sessionID -->
+								#{step},<!-- sessionID -->
+								#{pseq},<!-- sessionID -->
+								0,
+								0,
+								SYSDATE)
+	 <!-- dto에서 name이랑 id, pwd 찾아서 매핑해서 insert 하는거겠죠 -->
+	</insert> <!-- insert가 sql에서의 insert의 의미일까 아니면, xml에 추가시킨다는 의미의 insert일까? -->
+	
+	<update id="boardReply3" parameterType="java.lang.Long">
+		update board set reply = reply+1 where seq = #{val}<!-- 여기 바로 숫자로 어떻게 넣지 -->	
+	</update>
+	
+</mapper>

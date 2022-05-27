@@ -1,0 +1,41 @@
+	table {
+	    width: 100%;
+	    border:none;
+	 }
+  	th, td {
+	    padding: 10px;
+	    border-left: none !important;
+	    border-bottom: 1px solid #96D4D4;
+	    border-top: 1px solid #96D4D4;
+		text-align : center;
+	}
+  	.pageControl{
+  		margin-top : 10px;
+  	}
+  	
+  	.pageControl .toList{
+  		float : left;
+  	}
+  	
+  	.pageControl .updel{
+  		float : right;
+  		margin-right : 10px;
+  	}
+  	.pageInfo{
+  		font-size:11px;
+  	}
+  	
+  	.pageInfo .seqInfo{
+  		float : left;
+  	}
+  	
+	.pageInfo .hitInfo{
+  		float : right;
+  	}
+  	
+  	pre{
+  		word-break : break-all;
+  		white-space: pre-line;
+  	}
+  	
+

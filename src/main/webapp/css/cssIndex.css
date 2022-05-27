@@ -1,0 +1,48 @@
+@charset "UTF-8";
+body {
+   margin: 0; /* 바깥쪽여백 */
+   padding: 0; /* 안쪽여백 */
+   height: 100%;
+   width: auto;
+}
+
+#header {
+   margin-left: 30px;
+   margin-right: 30px;
+   width: 1000px;
+   height: 10%;
+   text-align: center;
+}
+
+#container {
+	margin : 0 auto;
+   /* margin-left: 30px;
+   margin-right: 30px; */
+   width: 1000px;
+   height:500px;
+}
+
+#container:after {
+   content: '';
+   display: block;
+   clear: both;
+   float:none;
+}
+
+#nav {
+   margin-left: 10px;
+   width: 28%;
+   height: 100%;
+   float: left;
+}
+
+#section {
+   width: 70%;
+   height: 100%;
+   float: left;
+}
+
+#footer {
+   width: 1000px;
+   height: 10%;
+}

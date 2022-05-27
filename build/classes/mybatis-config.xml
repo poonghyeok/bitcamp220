@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<properties resource="db.properties"></properties>
+	
+	<typeAliases>
+		<typeAlias type="member.bean.MemberDTO" alias="memberdto"/>
+		<typeAlias type="board.bean.BoardDTO" alias="boarddto"/>
+	</typeAliases>
+	
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED"> <!-- connection pool의 설정 아래의 properties를 기반으로 대충 느낌 오죠? 코드보고? -->
+				<property name="driver" value="${jdbc.driver}"/>
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
+			</dataSource>
+		</environment>
+	</environments> 		
+	
+	<mappers> <!-- 아래 xml파일보고 맵핑하면 된다고 알려줌 -->
+ 		<mapper resource="member/dao/memberMapper.xml"/>
+ 		<mapper resource="board/dao/boardMapper.xml"/>
+ 	</mappers>
+ 	
+</configuration>
+
+<!-- <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+   <properties resource="db.properties"></properties>
+
+   이렇게 별칭을 지어주면 mapper.xml에서 별칭으로 입력하면 된다.
+   약간 상수? 같은 것임
+   <typeAliases>
+      <typeAlias type="user.bean.UserDTO" alias="user"/>
+   </typeAliases>
+
+   <environments default="development">
+      <environment id="development">
+         <transactionManager type="JDBC"/>
+         <dataSource type="POOLED">
+            <property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+            <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+            <property name="username" value="c##java"/>
+            <property name="password" value="oracle"/>
+         private String driver = "oracle.jdbc.driver.OracleDriver";
+            private String url = "jdbc:oracle:thin:@localhost:1521:xe"; 
+            private String username = "c##java";
+            private String password = "oracle";
+         </dataSource>
+      </environment>
+   </environments>
+   
+   <mappers>
+      <mapper resource="user/dao/userMapper.xml"/> 여기에는 경로표시할 때 절대 . 쓰면 안됨
+   </mappers>
+</configuration> -->
