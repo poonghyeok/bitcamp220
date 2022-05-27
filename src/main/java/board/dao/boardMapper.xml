@@ -39,7 +39,7 @@
 	
 	<select id="getBoardRange" parameterType="java.util.Map" resultType="boarddto">
 		select * from (select rownum rn, tt.* from 
-			(select * from board order by ref desc, step asc)tt) where rn &gt;= ${startNum} and rn &lt;= ${endNum}
+			(select * from board order by ref desc, lev asc, logtime desc)tt) where rn &gt;= ${startNum} and rn &lt;= ${endNum}
 	</select>
 	
 	<select id="getBoardBySeq" parameterType="java.lang.Integer" resultType="boarddto">
@@ -59,7 +59,7 @@
 	<!--  -->
 	<update id="boardReply1" parameterType="boarddto">
 		<!-- 답글을 달았을 때, 원글의 step보다 높은 튜플의 step을 갖고 있고 원글의 ref랑 동일한 튜플의 step값을 1증가시켜준다-->
-		UPDATE board SET step = step+1 WHERE ref = ${ref} AND step > ${step}	
+		<!-- UPDATE board SET step = step+1 WHERE ref = ${ref} AND step > ${step} -->	
 	</update>
 	
 	<insert id="boardReply2" parameterType="java.util.Map">
@@ -71,7 +71,7 @@
 								#{content},<!-- form.contetn -->
 								#{ref},<!-- sessionID -->
 								#{lev},<!-- sessionID -->
-								#{step},<!-- sessionID -->
+								0,<!-- sessionID -->
 								#{pseq},<!-- sessionID -->
 								0,
 								0,

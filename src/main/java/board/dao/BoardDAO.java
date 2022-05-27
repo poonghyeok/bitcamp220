@@ -124,14 +124,14 @@ public class BoardDAO {
 		System.out.println("@@@boardReyply method 실행, 원글의 pseq = " + map.get("pseq"));
 		//update 원래 있던 애들 밀어주기
 		SqlSession sqlSession = sqlSessionFactory.openSession();
-		sqlSession.update("boardSQL.boardReply1", pdto); //원글의 ref, lev, step 등이 필요하니깐 dto를 들고가자 
+		/* sqlSession.update("boardSQL.boardReply1", pdto); */ //원글의 ref, lev, step 등이 필요하니깐 dto를 들고가자 
 		
 		//insert
 		//map에 다가 먼저 필요한 정보 추가해ㅑ주기
 		map.put("ref", Long.toString(pdto.getRef()));
 		System.out.println("#####원글 제목 : " + pdto.getSubject() + ", 원글 level : " + pdto.getLev());
 		map.put("lev", Long.toString(pdto.getLev()+1)); /* 원글의 lev + 1 */
-		map.put("step", Long.toString(pdto.getStep()+1)); /*원글의 step + 1*/
+		//map.put("step", Long.toString(pdto.getStep()+1)); /*원글의 step + 1*/
 		
 		sqlSession.insert("boardSQL.boardReply2", map); //원글의 ref, lev, step 등이 필요하니깐 dto를 들고가자 
 		int result = sqlSession.update("boardSQL.boardReply3", pdto.getSeq()); //원글의 ref, lev, step 등이 필요하니깐 dto를 들고가자 
