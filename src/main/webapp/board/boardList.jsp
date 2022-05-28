@@ -18,6 +18,8 @@
 <div id = "boardListTbl">
 	<%-- <div id = "debuging" style = "border: 1px solid red;">글의 seq : ${row }</div> --%>
 	<form name = "boardDetailValueForm">
+		<input type="hidden" id="seq" name="seq" value="">
+		<input type="hidden" id="pg" name="pg" value="">
 	<table>
 		<tr>
 			<%-- <c:forEach var = "columnName" items = "${requestScope.columnNames}">
@@ -41,7 +43,7 @@
 					 --%>
 					<td class = "maincol" style="text-align: left;">
 						
-							<a id = "subjectA" href = "/miniPJ/board/boardDetail.do?pg=${param.pg}&seq=${row.getSeq()}"> <!-- onclick="isLogined(); -->
+							<a id = "subjectA"  onclick="isLogined(${row.getSeq()},${param.pg});"> <!-- -->
 								<span id = "debuging" style = "border: 1px solid red;">글의 seq : ${row.getSeq()}</span>
 								<%-- <input type="hidden" name = "pg" value ="${requestScope.pg}">
 								<input type="hidden" name = "detailSeq" value ="${row.getSeq()}">
@@ -99,12 +101,15 @@
 	
 	<script type="text/javascript">
 		  
-		function isLogined(){
+		function isLogined(seq,pg){
 			if(${empty sessionScope.sessionId}){
 				alert('글을 조회하려면 로그인이 필요합니다. 먼저 로그인을 해주세요.');
 			}else{
 				document.boardDetailValueForm.method = "post";
 				document.boardDetailValueForm.action = "/miniPJ/board/boardDetail.do";
+				document.getElementById("seq").value = seq;
+				document.getElementById("pg").value = pg;
+				/* 	@@@href = "/miniPJ/board/boardDetail.do?pg=${param.pg}&seq=${row.geatSeq()}" */
 				document.boardDetailValueForm.submit();
 			}
 		}

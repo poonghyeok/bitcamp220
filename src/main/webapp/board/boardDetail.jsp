@@ -74,7 +74,7 @@
 				document.boardDetailForm.submit(); */
 			}else if(num ==2 ){
 				if(confirm("정말로 삭제하시겠습니까?")){
-					let actionPath = "/miniPJ/board/boardDelteForm.do";
+					let actionPath = "/miniPJ/board/boardDelete.do";
 					boardDetailSubmit(actionPath);
 					
 /* 					document.boardDetailForm.method = "post";
@@ -88,18 +88,19 @@
 				/* document.boardDetailForm.method = "post";
 				document.boardDetailForm.action = "/miniPJ/board/boardReplyForm.do";
 				document.boardDetailForm.submit();
-			 */}else if(num == 4){
+			 	*/
+			 }else if(num == 4){
 				let actionPath = "/miniPJ/board/boardList.do?pg=${requestScope.previousPage}";
 				boardDetailSubmit(actionPath);
 				
 				/* document.boardDetailForm.method = "post";
 				document.boardDetailForm.action = "/miniPJ/board/boardList.do";
 				document.boardDetailForm.submit();
-			 */}else{
+			 	*/
+			 }else{
 				alert('javascript something wrong..!');
 			}
 		}
-		
 		
 	</script>
 	
