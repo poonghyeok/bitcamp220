@@ -37,13 +37,33 @@
 		select count(*) from board
 	</select>
 	
+	<select id="getTotalSearchById" parameterType = "java.lang.String"  resultType="java.lang.Integer">
+		select count(*) from board where id = #{id}
+	</select>
+	
+	<select id="getTotalSearchBySubject" parameterType = "java.lang.String"  resultType="java.lang.Integer">
+		select count(*) from board where name like '%'||#{Subject}||'%'
+	</select>
+	
+	
 	<select id="getBoardRange" parameterType="java.util.Map" resultType="boarddto">
 		select * from (select rownum rn, tt.* from 
 			(select * from board order by ref desc, step asc)tt) where rn &gt;= ${startNum} and rn &lt;= ${endNum}
 	</select>
-	
+		
 	<select id="getBoardBySeq" parameterType="java.lang.Integer" resultType="boarddto">
 		select * from board where seq = ${seq}
+	</select>
+	
+	<select id="getBoardById" parameterType="java.util.Map" resultType="boarddto">
+		select * from (select rownum rn, tt.* from 
+			(select * from board where id = #{searchCondition} order by ref desc, step asc)tt) where rn &gt;= ${startNum} and rn &lt;= ${endNum}
+	</select>
+	
+	<select id="getBoardBySubject" parameterType="java.util.Map" resultType="boarddto">
+		select * from (select rownum rn, tt.* from 
+			(select * from board where subject like '%'||#{searchCondition}||'%' order by ref desc, step asc)tt) where rn &gt;= ${startNum} and rn &lt;= ${endNum}
+		
 	</select>
 	
 	
@@ -84,7 +104,7 @@
 	</update>
 	
 	<update id="deleteReplyDecrease" parameterType="java.util.Map">
-		update board set reply = reply -1 where seq = ${pseq}
+	 	update board set reply = reply -1 where seq = ${pseq}
 	</update>
 	
 	<delete id="deleteBoard" parameterType="java.util.Map">
@@ -94,4 +114,16 @@
 	<update id="deleteReplySubject" parameterType="java.util.Map">
 		update board set subject = '[원글이 삭제된 글입니다]'||subject where (seq != ${seq})  and (pseq = ${seq})
 	</update>
+	
+	
+	<delete id="deleteAtOnce" parameterType="java.util.Map">
+	<!-- begin 과 end사이에 한줄씩 ;로 구분하면서 여러 query문을 순서대로 한 쿼리문 처럼 실행시킬 수 있다.-->
+		begin
+			update board set reply = reply -1 where seq = ${pseq};
+			delete from board where seq = ${seq};
+			update board set subject = '[원글이 삭제된 글입니다]'||subject where (seq != ${seq})  and (pseq = ${seq});
+		end;
+	</delete>
+	
+	
 </mapper>

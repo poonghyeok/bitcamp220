@@ -6,48 +6,35 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>글목록 조회</title>
+<title>글 검색</title>
 	<link rel="stylesheet" href="./css/cssBoardList.css" type="text/css">
 </head>
 
 <body>
 <!-- 여기서 request 객체에ArrayList가 들어있고 list에는 BoardDTO가 담겨있다. -->
-<h3>글목록</h3>
-
-<c:set var = "columSize" value = "13" />
+<h3>검색된 목록</h3>
+<h3>test로 뽑아보기 : ${requestScope.searchList.get(0).getSubject()}</h3>
 <div id = "boardListTbl">
-	<%-- <div id = "debuging" style = "border: 1px solid red;">글의 seq : ${row }</div> --%>
 	<form name = "boardDetailValueForm">
 		<input type="hidden" id="seq" name="seq" value="">
 		<input type="hidden" id="pg" name="pg" value="">
 	<table>
 		<tr>
-			<%-- <c:forEach var = "columnName" items = "${requestScope.columnNames}">
-				<th>${columnName}</th>
-			</c:forEach>
-			 --%>
 			<th>글번호</th>
 			<th>제목</th>
-			<th>작성자</th>	
-			<!-- 작성자를 닉네임 (아이디 형태로 표시해보자) -->
+			<th>작성자</th>		
 			<th>작성일</th>
 			<th>조회수</th>
-			<!-- <th>글관리</th> -->
 		</tr>
 				
-			<c:forEach var = "row" items = "${requestScope.elements}">
+			<c:forEach var = "row" items = "${requestScope.searchList}">
 				<tr>
 					<td class = "subcol">${row.getSeq()}</td>
-					<%-- <td class = "subcol">${row.getId()}</td>
-					
-					<td class = "subcol">${row.getEmail()}</td>
-					 --%>
 					<td class = "maincol" style="text-align: left;">
 				 		<a id = "subjectA"  onclick="isLogined(${row.getSeq()},${param.pg});"> <!-- -->
 							<span id = "debuging" style = "border: 1px solid red;">글의 seq : ${row.getSeq()}</span>
 							<input type="hidden" name = "pg" value ="${requestScope.pg}">
 							<input type="hidden" name = "detailSeq" value ="${row.getSeq()}">
-							 <%-- href = "/miniPJ/board/boardDetail.do?pg=${param.pg}&seq=${row.getSeq()}"--%>
 							<c:forEach var="i" begin="1" end="${row.getLev()}" step="1">
 								&emsp; 
 							</c:forEach>
@@ -98,17 +85,18 @@
 	<p/>
 	
 	<form name="searchForm">
-		<select name="searchOption">
+		<select name="searchOption" id = "searchOption">
 			<option value="author">작성자id</option>
 			<option value="subject" selected>제목</option>
 		</select>
-		<input type="text" name="searchCondition">
+		<input type="text" name="searchCondition" id = "searchCondition">
 		<input type="button" onclick="searchList();" value = "검색">
 	</form>
 	
+	
 	<script type="text/javascript">
 		function searchList(){
-			const searchCondtion = (document.searchForm.searchCondition.value !== '');
+			let searchCondtion = (document.searchForm.searchCondition.value !== '');
 			console.log("searchList 조건 출력 : " + (document.searchForm.searchCondition.value !== ''));
 			if(searchCondtion){
 				document.searchForm.method = "post";
@@ -135,7 +123,29 @@
 		/* window.onload = isLogined(${sessionScope.sessionId}); */
 
 		function boardPaging(pg2){
-			location.href = "boardList.do?pg=" + pg2;
+			document.searchForm.method = "post";
+			document.searchForm.action = "/miniPJ/board/boardSearch.do?pg="+pg2;
+			document.searchForm.submit();
+		
+		}
+		
+		window.onload = function searchDefault(){
+			
+			let reqSearchOption = '${requestScope.searchOption}';
+			let reqSearchCondition = '${requestScope.searchCondition}';
+			console.log(reqSearchOption, reqSearchCondition);
+			
+			var temp = reqSearchOption;
+			var mySelect = document.getElementById('searchOption');
+
+			for(var i, j = 0; i = mySelect.options[j]; j++) {
+			    if(i.value == temp) {
+			        mySelect.selectedIndex = j;
+			        break;
+			    }
+			}
+			
+			document.getElementById('searchCondition').value = reqSearchCondition;
 		}
 		
 	</script>

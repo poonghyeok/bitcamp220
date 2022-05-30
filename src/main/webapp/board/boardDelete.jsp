@@ -9,11 +9,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-req. num = ${requestScope.num}
-<c:if test="${requestScope.num > 0 }">
+req.num = ${requestScope.num}
 	<h3> 글이 삭제되었습니다. </h3>
 	<a href="http://localhost:8080/miniPJ/board/boardList.do?pg=${requestScope.previousPage}">글목록</a>
-</c:if>
 
 </body>
 </html>

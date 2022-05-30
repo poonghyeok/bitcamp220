@@ -5,7 +5,17 @@
 	.maincol{
 		font-size : 13px;
 		text-align : center;
+		cursor: pointer;
 	}
+	
+	.maincol:hover{
+		font-size : 13px;
+		text-align : center;
+		background : #0bdb43;
+		color:#f58207;
+		cursor: pointer;
+	}
+	
 	table {
 	    width: 100%;
 	    border:none;
@@ -56,5 +66,15 @@
 	/* mouse over link */
 	#subjectA:hover {
 	  color:hotpink;	
+	}
+	
+	#currentPaging{
+		cursor:pointer;
+		background:yellow;
+		color:red;
+	}
+	
+	#paging{
+		cursor:pointer;
 	}
 	

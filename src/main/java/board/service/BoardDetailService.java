@@ -2,6 +2,7 @@ package board.service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.control.CommandProcess;
 
@@ -17,10 +18,20 @@ public class BoardDetailService implements CommandProcess {
 		String requestedSeq = request.getParameter("seq");
 		String previousPage = request.getParameter("pg");
 		
+		
 		System.out.println("requestedPg : " + previousPage); 	
 		System.out.println("requestedSeq : " + requestedSeq); 	
 		BoardDAO dao = new BoardDAO();
-		dao.increaseBoardHit(Integer.parseInt(requestedSeq));
+		
+		HttpSession session = request.getSession();
+		
+		if(session.getAttribute("viewPage") == null) {
+			session.setAttribute("viewPage", requestedSeq);
+			dao.increaseBoardHit(Integer.parseInt(requestedSeq));
+		}
+		
+		System.out.println(session.getAttribute("viewPage"));
+		
 		request.setAttribute("rqPage", dao.getBoardBySeq(Integer.parseInt(requestedSeq)));
 		request.setAttribute("previousPage", previousPage);
 		request.setAttribute("display", "/board/boardDetail.jsp");
