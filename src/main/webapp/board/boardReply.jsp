@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
+<%@ page trimDirectiveWhitespaces="true" %>
+${json}
 
-<html>
+<%-- <html>
+<!DOCTYPE html>
 <body>
 <h3>답글 작성 결과 = ${requestScope.boardRepliedNum}</h3>
 
@@ -14,4 +15,4 @@
 
 </body>
 </html>
-
+ --%>

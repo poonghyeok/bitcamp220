@@ -7,15 +7,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.control.CommandProcess;
+import org.json.simple.JSONObject;
+
+import com.control.CommandProcess3;
 
 import board.dao.BoardDAO;
 
-public class BoardReplyService implements CommandProcess {
+public class BoardReplyService implements CommandProcess3 {
 
 	@Override
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) throws Throwable {
 		HttpSession session = request.getSession();
+		BoardDAO dao = new BoardDAO();
+
 		
 		String pseq =request.getParameter("pseq"); //원글번호 
 		String pg =request.getParameter("pg");	//원글이 속한 페이지
@@ -27,7 +31,7 @@ public class BoardReplyService implements CommandProcess {
 		String email = (String)session.getAttribute("sessionEmail");
 		
 		System.out.println("@@@@ Board Reply 서블릿 탑승 @@@@");
-		System.out.println("받은 정보들 : \n " + pseq + "\t" + pg + "\t"+ subject + "\t"+ content + "\t"+ id + "\t"+ name + "\t"+ email);
+		System.out.println("\n 답글 받은 정보들 : \n " + pseq + "\t" + pg + "\t"+ subject + "\t"+ content + "\t"+ id + "\t"+ name + "\t"+ email);
 		
 		Map<String, String> map = new HashMap<>();
 		
@@ -39,13 +43,20 @@ public class BoardReplyService implements CommandProcess {
 		map.put("name", name);
 		map.put("email", email);
 		
-		BoardDAO dao = new BoardDAO();
+		int seqCurrVal = dao.getSeqCurrVal();
+		System.out.println("\n현재 seq 뽑아보기 : " + seqCurrVal);
 		int boardRepliedNum = dao.boardReply(map);
 		request.setAttribute("boardRepliedNum", boardRepliedNum);
-		request.setAttribute("pg", pg);
-		request.setAttribute("display", "/board/boardReply.jsp");
 		
-		return "/";
+		JSONObject json = new JSONObject();
+		json.put("pg", pg);
+		json.put("seq", seqCurrVal);
+		
+		System.out.println(" \n json 보내기 전, 뽑아보기 : " + json.get("pg") + "  : " + json.get("seq"));
+		
+		request.setAttribute("json", json);
+		
+		return "/board/boardReply.jsp"; //어짜피 ajax로 서블릿 태우면 이쪽으로 리디렉션 안먹힘. ajax에서 location.href 하는 곳이 목적지 
 	}
 
 }

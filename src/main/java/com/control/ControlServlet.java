@@ -28,16 +28,16 @@ public class ControlServlet extends HttpServlet {
 	
 	@Override
 	public void init(ServletConfig config) throws ServletException {
-		
+		System.out.println("\n\n@@@@@서블릿 init@@@@@@@\n\n");
 		String propertiesConfig = config.getInitParameter("propertiesConfig"); //serlvet이니깐 지정해놓은 properties를 읽어온다. properties를 읽어온다기 보다는 properties file이 존재하는 path를 return 받는다.
 		//ServletConfig라는 class의 getInitParameter를 사용해서 web.xml에서 tagging 해놓은 propertiesConfig 라는 param-name의 param-value 즉 절대경로를 String type으로 return받게 된다 .
-		System.out.println("propertiesConfig : " + propertiesConfig); //Properties라는 datatype있으니깐 propertyConfig라고 하는 편이 낫겠다. 
+		/* System.out.println("propertiesConfig : " + propertiesConfig); */ //Properties라는 datatype있으니깐 propertyConfig라고 하는 편이 낫겠다. 
 		
 
 		  String realFolder = config.getServletContext().getRealPath("/WEB-INF/");
 		  //WEB.INF가 있는 폴더를 받아낸다. 
 		  String realPath = realFolder + propertiesConfig;
-		  System.out.println("realPath = " + realPath);
+			/* System.out.println("realPath = " + realPath); */
 		 
 		
 		FileInputStream fin = null; //FileInputStream 객체를 생성시켜둔다. properties는 file type이기 때문에 file의 내용을 입력받기 위해서
@@ -45,7 +45,7 @@ public class ControlServlet extends HttpServlet {
 		try {
 			fin = new FileInputStream(realPath); //일단 FileInputStream 객체에 properties의 절대경로를 꽂는다.
 			properties.load(fin); //properties 객쳉 file의 절대경로를 꽂은 fileInputStream의 객체를 꽂는다.
-			System.out.println("loaded properties = "+properties);
+			/* System.out.println("loaded properties = "+properties); */
 		
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -56,7 +56,6 @@ public class ControlServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		System.out.println();
 		
 		Iterator it = properties.keySet().iterator();
 		while(it.hasNext()) {
@@ -106,7 +105,7 @@ public class ControlServlet extends HttpServlet {
 		
 		String category = request.getServletPath();
 		
-		CommandProcess com = (CommandProcess)map.get(category); //member.service.WriteFormService
+		CommandProcess3 com = (CommandProcess3)map.get(category); //member.service.WriteFormService
 		
 		String view = null;
 	

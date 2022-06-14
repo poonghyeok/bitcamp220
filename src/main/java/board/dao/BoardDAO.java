@@ -181,7 +181,13 @@ public void increaseBoardHit(int seq) {
 		System.out.println("답글이 성공적으로 작성되었습니다.");
 		return result;
 	}
-
+	
+	public int getSeqCurrVal() {
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		int currval = sqlSession.selectOne("boardSQL.boardCurrentSeq");
+		//여기고쳐 여기 여기 여기
+		return currval;
+	}
 	public int boardDelte(Map<String, Integer> map) {
 		int delNum = 0;
 		SqlSession sqlSession = sqlSessionFactory.openSession();

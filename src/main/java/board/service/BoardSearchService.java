@@ -9,13 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.control.CommandProcess;
+import com.control.CommandProcess3;
 
 import board.bean.BoardDTO;
 import board.bean.BoardPaging;
 import board.dao.BoardDAO;
 
-public class BoardSearchService implements CommandProcess {
+public class BoardSearchService implements CommandProcess3 {
 
 	@Override
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) throws Throwable {
@@ -61,7 +61,7 @@ public class BoardSearchService implements CommandProcess {
 		
 		System.out.println("list 0 번째 꺼내보기 : " + list.get(0).getSubject());
 		
-		request.setAttribute("searchList", list);
+		request.setAttribute("elements", list);
 		//글의 총수 
 		
 		BoardPaging boardPaging = new BoardPaging();
@@ -77,8 +77,8 @@ public class BoardSearchService implements CommandProcess {
 		//request.setAttribute("display", "/board/boardList.jsp");
 		request.setAttribute("display", "/board/boardSearchList2.jsp");
 
-		return "/";
-	
+		return "/board/boardList.jsp";
+		
 	}
 }
 

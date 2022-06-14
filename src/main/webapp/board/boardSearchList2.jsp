@@ -61,21 +61,6 @@
 			
 			<span class = "pageNumList">
 				<div>${requestScope.boardPaging.getPagingHTML()}</div>
-				<%-- <c:forEach var = "pageNum" begin = "1" end = "${requestScope.totalPageNum}" step = "1">
-					pageNum : ${pageNum} || param.pg = ${param.pg} || pageNum == param.pg ${pageNum == param.pg}
-					
-					 
-					 <c:if test = "${pageNum == param.pg}" >
-						<a id = "listLink" href = "/miniPJ/board/boardList.do?pg=${pageNum}" style = "color : red"> 
-							[ ${pageNum} ]
-						</a>
-					</c:if>
-					<c:if test="${pageNum != param.pg}" >
-						<a id = "listLink" href = "/miniPJ/board/boardList.do?pg=${pageNum}" > 
-							[ ${pageNum} ]
-						</a>
-					</c:if>
-				</c:forEach> --%>
 			</span>
 		</div> <!-- div : pageControl  -->
 		
@@ -92,7 +77,6 @@
 		<input type="text" name="searchCondition" id = "searchCondition">
 		<input type="button" onclick="searchList();" value = "검색">
 	</form>
-	
 	
 	<script type="text/javascript">
 		function searchList(){
@@ -144,10 +128,10 @@
 			        break;
 			    }
 			}
-			
 			document.getElementById('searchCondition').value = reqSearchCondition;
 		}
 		
 	</script>
+
 </body>
 </html>

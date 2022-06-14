@@ -6,6 +6,7 @@
 			border : 3px solid black;
 		}
 	</style>
+	
 	<form name  ="loginForm" id = "loginForm" action = "/miniPJ/member/login.do" method = "post">
 		<table>
 			<tr>
@@ -14,7 +15,7 @@
 				<div id = "idDiv" style = "color : red;"></div>
 				</td>
 				
-			</tr>
+			</tr> 
 			
 			<tr>
 				<td>비밀번호</td>
@@ -25,25 +26,15 @@
 			</tr>
 			
 			<tr>
-				<td colspan = 2 align = "center"> <input type = "button" value = "로그인" onclick="checkLoginData();">
+				<td colspan = 2 align = "center"> <input type = "button" value = "로그인" id="loginButton">
 				<input type = "button" value = "회원가입" onclick="location.href='/miniPJ/member/writeForm.do'">
+			 	<div id = "loginResultDiv"></div>
 			 </td>
 			</tr>
 			
 		</table>
 	</form>
-	<script>
-		function checkLoginData(){
-			document.getElementById("idDiv").innerText = "";
-			document.getElementById("pwdDiv").innerText = "";
-			
-			if(document.getElementById("id").value === ""){
-				document.getElementById("idDiv").innerText = "아이디를 입력해주세요 ";
-			}else if(document.getElementById("pwd").value === ""){
-				document.getElementById("pwdDiv").innerText = "비밀번호 입력해주세요 ";
-			}else{
-				document.loginForm.submit();
-			}
-			
-		}
-	</script>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src = "http://localhost:8080/miniPJ/script/memberLoginForm.js"></script>
+		

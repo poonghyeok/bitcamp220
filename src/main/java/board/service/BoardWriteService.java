@@ -4,12 +4,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.control.CommandProcess;
+import com.control.CommandProcess3;
 
 import board.bean.BoardDTO;
 import board.dao.BoardDAO;
 
-public class BoardWriteService implements CommandProcess {
+public class BoardWriteService implements CommandProcess3 {
 
 	@Override
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) {
@@ -29,20 +29,24 @@ public class BoardWriteService implements CommandProcess {
 		String content = request.getParameter("content");
 		System.out.println("content : " + content);
 		
-		BoardDTO dto = new BoardDTO();
-		dto.setSubject(subject);
-		dto.setContent(content);
-		dto.setEmail(sessionEmail);
-		dto.setName(sessionName);
-		dto.setId(sessionId);
-		
-		BoardDAO dao = new BoardDAO();
-		int boardWrittenNum = dao.write(dto);
+		if(subject != null && content != null) {
+			BoardDTO dto = new BoardDTO();
+			dto.setSubject(subject);
+			dto.setContent(content);
+			dto.setEmail(sessionEmail);
+			dto.setName(sessionName);
+			dto.setId(sessionId);
 			
-		request.setAttribute("boardWrittenNum", boardWrittenNum);
-		request.setAttribute("display", "/board/boardWrite.jsp");
+			BoardDAO dao = new BoardDAO();
+			int boardWrittenNum = dao.write(dto);
+				
+			request.setAttribute("boardWrittenNum", boardWrittenNum);
+			request.setAttribute("display", "/board/boardWrite.jsp");
+		}else {
+			System.out.println("null 이다!");
+		}
 		
-		return "/";
+		return "/board/boardWrite.jsp";
 	}
 
 }

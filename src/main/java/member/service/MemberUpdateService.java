@@ -7,12 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.control.CommandProcess;
+import com.control.CommandProcess3;
 
 import member.bean.MemberDTO;
 import member.dao.MemberDAO;
 
-public class MemberUpdateService implements CommandProcess {
+public class MemberUpdateService implements CommandProcess3 {
 
 	@Override
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) throws Throwable {
@@ -22,6 +22,7 @@ public class MemberUpdateService implements CommandProcess {
 		HttpSession session = request.getSession();
 		System.out.println("@@@수정절차 돌입 , 현재 로그인 하고 있는 아이디 : " + session.getAttribute("sessionId"));
 	
+		
 		String name = request.getParameter("nameWrite");
 		String id = request.getParameter("idWrite");
 		String pwd = request.getParameter("pwdWrite");

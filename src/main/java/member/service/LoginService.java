@@ -4,12 +4,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.control.CommandProcess;
+import com.control.CommandProcess3;
 
 import member.bean.MemberDTO;
 import member.dao.MemberDAO;
 
-public class LoginService implements CommandProcess {
+public class LoginService implements CommandProcess3 {
 
 	@Override
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) throws Throwable {
@@ -30,30 +30,13 @@ public class LoginService implements CommandProcess {
 			session.setAttribute("sessionId", resultDTO.getId());
 			session.setAttribute("sessionName", resultDTO.getName());
 			session.setAttribute("sessionEmail", resultDTO.getEmail1()+"@"+resultDTO.getEmail2());
-			//session.setAttribute("sessionEmail", returnedMember.getEmail1()+"@"+returnedMember.getEmail2());
-			
-			/*
-			 * Cookie cookie = new Cookie("memId", id); cookie.setPath("/");
-			 * cookie.setMaxAge(30*60); //기본단위 : 초 //클라이언트로 보내야함.
-			 * response.addCookie(cookie);
-			 * 
-			 * Cookie cookie2 = new Cookie("memName", loginResult); cookie2.setPath("/");
-			 * cookie2.setMaxAge(30*60); //기본단위 : 초 //클라이언트로 보내야함.
-			 * response.addCookie(cookie2);
-			 */
-			/*
-			 * request.setAttribute("name", loginResult); request.setAttribute("id", id);
-			 * request.setAttribute("loginStatus", "login");
-			 */
-			 
+			return "/";
 		}else {
 			System.out.println("로그인 실패했으니 loginFail 실어보낸다.");
 			session.setAttribute("loginFail", "로그인실패..다시시도");
-			request.setAttribute("navDisplay", "./member/loginFail.jsp");
+			return "/";
 		}
 		
-		return "/";
-	
 	}
 
 }

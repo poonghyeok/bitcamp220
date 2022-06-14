@@ -3,12 +3,12 @@ package member.service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.control.CommandProcess;
+import com.control.CommandProcess3;
 
 import member.bean.MemberDTO;
 import member.dao.MemberDAO;
 
-public class WriteService implements CommandProcess {
+public class WriteService implements CommandProcess3 {
 
 	@Override
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) throws Throwable {
@@ -29,6 +29,19 @@ public class WriteService implements CommandProcess {
 		String address1 = request.getParameter("address1");
 		String address2 = request.getParameter("address2");
 
+		System.out.println("@@@@@@ajax로 넘어온 애들 @@@@@@@@@");
+		System.out.println("name : " + name);
+		System.out.println("pwd : " + pwd);
+		System.out.println("gender : " + gender);
+		System.out.println("email1 : " + email1);
+		System.out.println("email2 : " + email2);
+		System.out.println("tel1 : " + tel1);
+		System.out.println("tel2 : " + tel2);
+		System.out.println("tel3 : " + tel3);
+		System.out.println("zipcode : " + zipcode);
+		System.out.println("address1 : " + address1);
+		System.out.println("address2 : " + address2);
+		
 		memberDTO.setName(name);
 		memberDTO.setId(id);
 		memberDTO.setPwd(pwd);
@@ -59,7 +72,7 @@ public class WriteService implements CommandProcess {
 		request.setAttribute("su", executedLine);
 		request.setAttribute("display", "/member/write.jsp");
 		
-		return "/";
+		return "/member/write.jsp";
 	}
 
 }

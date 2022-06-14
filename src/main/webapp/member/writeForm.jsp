@@ -23,7 +23,8 @@
 	#writeForm table{
 		border: 1px solid black;
 		border-collapse: collapse;
-		width : 400px;
+		width : 550px;
+		height: 700px;
 		cellpadding : 5;
 	}
 	#writeForm th, td {
@@ -32,6 +33,10 @@
 	}
 	#writeForm .attribute{
 		text-align : center;
+		width: 150px;
+	}
+	#writeForm input{
+		margin-left: 20px;
 	}
 </style>
 
@@ -50,7 +55,6 @@
 			<tr>
 				<td class = "attribute">아이디</td>
 				<td><input type = "text" name = "idWrite" id = "idWrite" placeholder = "아이디">
-					<input type = "button" value = "중복확인" onclick = "checkWriteDuplicate();">
 					<div id = "idDivWrite" style = "color : red; background: yellow;"></div>
 				</td>
 			</tr>
@@ -82,9 +86,9 @@
 			<tr>
 				<td class = "attribute">이메일</td>
 				<td>
-					<input type = "text" name = "email1">
+					<input type = "text" name = "email1" id= "email1">
 					@
-					<input type = "email" list = "email2" name = "email2" placeholder = "직접입력">
+					<input type = "email" list = "email2" name = "email2" id = "email2" placeholder = "직접입력">
 					<datalist id = "email2">
 						<option value = "gmail.com">
 						<option value = "daum.net">
@@ -114,7 +118,7 @@
 			
 			<tr>
 				<td colspan = 2 align = "center">
-					<input type = "button" value = "회원가입" onclick = "checkWrite();">	
+					<input type = "button" value = "회원가입" id = "writeButton">	
 					<input type = "reset" value = "다시작성" >
 					<div id = "checkDivWrite" style = "color: red; background: yellow;"></div>
 				</td>
@@ -124,124 +128,8 @@
 	</form>
 	
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	<script>
-	function sample6_execDaumPostcode() {
-	    new daum.Postcode({
-	        oncomplete: function(data) {
-	            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-	
-	            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-	            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-	            var addr = ''; // 주소 변수
-	
-	            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-	            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-	                addr = data.roadAddress;
-	            } else { // 사용자가 지번 주소를 선택했을 경우(J)
-	                addr = data.jibunAddress;
-	            }
-	
-	   
-	
-	            // 우편번호와 주소 정보를 해당 필드에 넣는다.
-	            document.getElementById('zipcode').value = data.zonecode;
-	            document.getElementById("address1").value = addr;
-	            // 커서를 상세주소 필드로 이동한다.
-	            document.getElementById("address2").focus();
-	        }
-	    }).open();
-	}
-	
-	</script>
-	
-	<script>
-		var checkDuplicate = {
-			buttonClick : false,
-			checkedId : ""
-		};
-	
-		/* function isFullName(){
-			document.getElementById("nameDivWrite").innerText = "";
-			nameDivInner = document.getElementById("nameDivWrite").innerText;
-			nameVal = document.writeForm.nameWrite.value;
-			
-		}
-		
-		function iFullPwd(){
-			document.getElementById("pwdDivWrite").innerText = "";
-            pwdDivInner = document.getElementById("pwdDivWrite").innerText;  
-			pwdVal = document.writeForm.pwdWrite.value;                      
-			pwd2Val = document.writeForm.pwd2Write.value;                    
-		} */
-	
-		function checkWrite(){
-			document.getElementById("nameDivWrite").innerText = "";
-			document.getElementById("pwdDivWrite").innerText = "";
-			document.getElementById("checkDivWrite").innerText = "";
-			document.getElementById("idDivWrite").innerText = "";
-			
-			var nameDivInner = document.getElementById("nameDivWrite").innerText;
-			var nameVal = document.writeForm.nameWrite.value;
-			
-			var idDivInner = document.getElementById("idDivWrite").innerText;
-			var idVal = document.writeForm.idWrite.value;		
-			
-			var pwdDivInner = document.getElementById("pwdDivWrite").innerText;
-			var pwdVal = document.writeForm.pwdWrite.value;
-			var pwd2Val = document.writeForm.pwd2Write.value;
-			
-			var checkDivInner = document.getElementById("checkDivWrite").innerText;
-			
-				if(nameVal === ""){
-					document.getElementById("nameDivWrite").innerText = "이름을 입력해주세요 !";
-				}else if(idVal === ""){
-					document.getElementById("idDivWrite").innerText = "id를 입력해주세요!";
-				}else if(pwdVal === ""){
-					document.getElementById("pwdDivWrite").innerText = "비밀번호를 입력해주세요 !";
-				}else{
-					if(pwdVal !== pwd2Val){
-						document.getElementById("pwdDivWrite").innerText = "비밀번호가 다릅니다!";
-				 	}else{
-				 		if(checkDuplicate.buttonClick === false){
-				 			document.getElementById("checkDivWrite").innerText ="중복확인을 완료하세요!"
-						}else{
-							if(idVal !== checkDuplicate.checkedId){
-								document.getElementById("checkDivWrite").innerText = "중복확인이 완료된 아이디를 사용하셔야합니다!";
-							}else{
-								document.writeForm.submit();
-							}
-						}	
-				 	}
-				}
-		}
-
-		function checkLogData(){
-			document.getElementById("idDiv").innerText = "";
-			document.getElementById("pwdDiv").innerText = "";
-			
-			if(document.getElementById("id").value === ""){
-				document.getElementById("idDiv").innerText = "아이디를 입력해주세요 ";
-			}else if(document.getElementById("pwd").value === ""){
-				document.getElementById("pwdDiv").innerText = "비밀번호 입력해주세요 ";
-			}else{
-				document.loginForm.submit();
-			}
-			
-		}
-
-		function checkWriteDuplicate(){
-			const deliveredId = document.writeForm.idWrite.value;
-			if(deliveredId === ""){
-				document.getElementById("idDivWrite").innerText = "id를 입력해주세요!";
-			}else{
-				document.getElementById("idDivWrite").innerText = "";
-				window.open("http://localhost:8080/miniPJ/member/checkDuplicate.do?id=" + deliveredId,"duplicate","width=150 heigth=80 left = 200 top = 200");
-			}
-
-		}
-
-	
-	</script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src = "../script/memberWriteForm.js"></script>
 	
 </body>
 </html>

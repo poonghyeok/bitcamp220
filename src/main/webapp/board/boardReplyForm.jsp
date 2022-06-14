@@ -20,10 +20,9 @@
 
  	
 <body>
-
-	<form name = "boardReplyForm">
-		<input type="hidden" name="pseq" value="${requestScope.pseq}">
-		<input type="hidden" name="pg" value="${requestScope.pg}">
+	<form name = "boardReplyForm" id = "boardReplyForm">
+		<input type="text" name="pseq" id="pseq" value="${requestScope.pseq}">
+		<input type="text" name="pg" id="pg" value="${requestScope.pg}">
 
 		<table border = "1" cellspacing = "3" cellpadding ="5">
 
@@ -44,7 +43,7 @@
 			
 			<tr>
 				<td colspan = "2" align = "center"> 
-					<input type = "button" value = "답글쓰기" onclick = "replyButton()">
+					<input type = "button" value = "답글쓰기" id = "boardReplyButton">
 					<!-- 유효성 검사 추가하고 싶다면 추가 -->
 					<input type = "reset" value = "다시작성">
 				</td>
@@ -53,39 +52,10 @@
 		</table>
 	</form>
 	
-	<script>
-		function submitPost(actionPath){
-			document.boardReplyForm.method = "post";
-			document.boardReplyForm.action = actionPath;
-			document.boardReplyForm.submit(); 
-		}
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="/miniPJ/script/boardReplyForm.js"></script>
 	
-		function check(actionPath){
-			const subjectEle = document.getElementById('subject');
-			const contentEle = document.getElementById('content');
-			const subjectDiv = document.getElementById('subjectDiv');
-			const contentDiv = document.getElementById('contentDiv');
-
-			subjectDiv.innerText = "";
-			contentDiv.innerText = "";
-			
-			if(subjectEle.value === ""){
-				subjectDiv.innerText = "제목을 입력해야합니다.";
-			}else{
-				if(contentEle.value === ""){
-					contentDiv.innerText = "내용을 입력해야합니다.";
-				}else{
-					submitPost(actionPath);  	
-				}
-			}
-		}
-
-		function replyButton(){
-			let actionPath = "http://localhost:8080/miniPJ/board/boardReply.do";
-			check(actionPath);
-		}
-	
-	</script>
-
+		
+		
 </body>
 </html>

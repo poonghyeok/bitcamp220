@@ -103,6 +103,10 @@
 		update board set reply = reply+1 where seq = #{val}<!-- 여기 바로 숫자로 어떻게 넣지 -->	
 	</update>
 	
+	<select id="boardCurrentSeq" resultType="java.lang.Integer">
+		SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME='SEQ_BOARD'
+	</select>
+	
 	<update id="deleteReplyDecrease" parameterType="java.util.Map">
 	 	update board set reply = reply -1 where seq = ${pseq}
 	</update>
@@ -114,7 +118,6 @@
 	<update id="deleteReplySubject" parameterType="java.util.Map">
 		update board set subject = '[원글이 삭제된 글입니다]'||subject where (seq != ${seq})  and (pseq = ${seq})
 	</update>
-	
 	
 	<delete id="deleteAtOnce" parameterType="java.util.Map">
 	<!-- begin 과 end사이에 한줄씩 ;로 구분하면서 여러 query문을 순서대로 한 쿼리문 처럼 실행시킬 수 있다.-->

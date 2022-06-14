@@ -21,7 +21,7 @@
  	
 <body>
 
-	<form name = "boardForm" action="http://localhost:8080/miniPJ/board/boardWrite.do" method = "post">
+	<form name = "boardForm" id= "boardForm">
 
 		<table border = "1" cellspacing = "3" cellpadding ="5">
 
@@ -30,7 +30,6 @@
 				<td>
 				<div class = "alertMsg" id = "subjectDiv"></div>
 				<input type = "text" name = "subject" id = "subject" placeholder = "제목을 입력하세요 "></td>
-				
 			</tr>
 
 			<tr>
@@ -42,8 +41,7 @@
 			
 			<tr>
 				<td colspan = "2" align = "center"> 
-					<input type = "button" value = "글쓰기" onclick = "check();">
-					<!-- 유효성 검사 추가하고 싶다면 추가 -->
+					<input type = "button" value = "글쓰기" id="boardWriteButton">
 					<input type = "reset" value = "다시작성">
 				</td>
 			</tr>
@@ -51,30 +49,16 @@
 		</table>
 	</form>
 	
-	<input type = "button" value = "목록" onclick="location.href='/miniPJ/board/boardList.do?pg=1'">
+	<input type = "button" value = "목록" id="boardListButton">
 	
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src = "http://localhost:8080/miniPJ/script/boardWrite.js"></script>
 	<script>
-		function check(){
-			const subjectEle = document.getElementById('subject');
-			const contentEle = document.getElementById('content');
-			const subjectDiv = document.getElementById('subjectDiv');
-			const contentDiv = document.getElementById('contentDiv');
-
-			subjectDiv.innerText = "";
-			contentDiv.innerText = "";
-			
-			if(subjectEle.value === ""){
-				subjectDiv.innerText = "제목을 입력해야합니다.";
-			}else{
-				if(contentEle.value === ""){
-					contentDiv.innerText = "내용을 입력해야합니다.";
-				}else{
-					  document.boardForm.submit();  	
-				}
-						
+		$(function(){
+			if(${sessionId == null}){
+				$('div#section').html('로그인 필요한 기능');
 			}
-		}
+		})
 	</script>
-
 </body>
 </html>

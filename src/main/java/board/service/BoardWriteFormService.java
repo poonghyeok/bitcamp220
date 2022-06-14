@@ -4,9 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.control.CommandProcess;
+import com.control.CommandProcess3;
 
-public class BoardWriteFormService implements CommandProcess {
+public class BoardWriteFormService implements CommandProcess3 {
 
 	@Override
 	public String requestPro(HttpServletRequest request, HttpServletResponse response) {
@@ -18,7 +18,8 @@ public class BoardWriteFormService implements CommandProcess {
 			request.setAttribute("display", "/board/boardWriteForm.jsp");		
 		}else{
 			request.setAttribute("requireLoginMsg", "글 작성을 하려면 로그인이 필요합니다!");
-		}
+		} 	
+		
 
 		return "/";
 	}

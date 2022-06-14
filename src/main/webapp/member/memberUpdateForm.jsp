@@ -88,7 +88,7 @@
 			
 			<tr>
 				<td colspan = 2 align = "center">
-					<input type = "button" value = "회원정보수정" onclick = "checkValOrSubmit();">
+					<input type = "button" value = "회원정보수정" id = "checkValOrSubmit">
 					<input type = "button" value = "다시작성" onclick = "updateFormReload();">
 				</td>
 			</tr>
@@ -96,6 +96,66 @@
 		</table>
 	</form>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src = "http://localhost:8080/miniPJ/script/memberUpdateForm.js"></script>
+	<script type="text/javascript">
+	/*한명의 data만 받아오고 싶다. 여기서 json이 활용되나. 한명검색할 때 id는 그냥 session에 있는 값 사용하면 되니깐 굳이 뭐 넘겨줄 필요없다.*/
+	$(function(){
+		
+		$.ajax({
+			type : 'post',
+			url : '/miniPJ/member/getMember.do',
+			dataType : 'json',
+			success : function(member){
+				console.log(member);
+				$('input[name="nameWrite"]').val(member.name);
+				$('input[name="idWrite"]').val(member.id);
+				$('input[name="gender"][value="'+member.name+'"]').prop('checked', true);
+				$('input[name="email1"]').val(member.email1);
+				$('input[name="email2"]').val(member.email2);
+				$('input[name="tel1"]').val(member.tel1);
+				$('input[name="tel2"]').val(member.tel2);
+				$('input[name="tel3"]').val(member.tel3);
+				$('input[name="zipcode"]').val(member.zipcode);
+				$('input[name="address1"]').val(member.address1);
+				$('input[name="address2"]').val(member.address2);
+			},
+			error : function(err){
+				console.log(err);
+			}
+		})
+	})
+	
+	$('#checkValOrSubmit').click(function(){
+		$('#nameDivWrite').empty();
+		$('#pwdDivWrite').empty();
+		
+		if($('#nameWrite').val() === ''){
+			$('#nameDivWrite').html('이름을 입력하세요 제이쿼리!');
+		}else if($('#pwdWrite').val() === ''){
+			$('#pwdDivWrite').html('변경할 비밀번호를 입력해주세요 제이쿼리!');
+		}else if($('#pwdWrite').val() !== $('#pwd2Write').val()){
+			$('#pwdDivWrite').html('동일한 비밀번호를 입력해주세요 제이쿼리!');
+		}else{
+			/* $('#memberUpdateForm').submit(); */
+			$.ajax({
+				type: 'post',
+				url : '/miniPJ/member/memberUpdate.do',
+				data : $('#memberUpdateForm').serialize(),
+				/* serialize만 해주고 넘겨도 &로 구분되어서 넘어가기 때문에 서블릿에서 다 받아먹을 수 있다. get방식으로 보냈을 때 &로 구분되어서 딜리버 되는 것처럼 */
+				success:function(){
+					console.log($('#memberUpdateForm').serialize());
+					alert('회원정보를 수정하였습니다..');
+					location.href = '/miniPJ';
+				},
+				error : function(err){
+					console.log(err);
+				}
+			});
+		}
+	})
+				
+	</script>
 	
 	<script>
 		function sample6_execDaumPostcode() {
@@ -128,7 +188,7 @@
 	<script type="text/javascript">
 		
 		
-		function checkValOrSubmit(){
+		/* function checkValOrSubmit(){
 			document.getElementById("nameDivWrite").innerText = "";
 			document.getElementById("pwdDivWrite").innerText = "";
 			
@@ -141,9 +201,9 @@
 			}else{
 				document.memberUpdateForm.submit();
 			}
-		}
+		} */
 		
-	    function loadExistingData(){
+	    /* function loadExistingData(){
 			document.memberUpdateForm.nameWrite.value = '${requestScope.userData.getName()}'
 			document.memberUpdateForm.idWrite.value = '${requestScope.userData.getId()}'
 		
@@ -165,13 +225,13 @@
 			document.memberUpdateForm.zipcode.value = '${requestScope.userData.getZipcode()}'
 			document.memberUpdateForm.address1.value = '${requestScope.userData.getAddress1()}'
 			document.memberUpdateForm.address2.value = '${requestScope.userData.getAddress2()}'
-		}
+		} */
 	    
 	    function updateFormReload(){
 	    	window.location.reload();	
 	    }
 	    
-	    window.onload = loadExistingData;
+	    /* window.onload = loadExistingData; */
 	    
 	</script>
 	

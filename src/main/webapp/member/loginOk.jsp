@@ -1,8 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri= "http://java.sun.com/jsp/jstl/core" %>
 
-<%-- <%
+<%
 //쿠키
 Cookie[] cookieArr = request.getCookies();
 
@@ -18,7 +18,7 @@ if(cookieArr != null){
 
 %>
  --%>
-<!DOCTYPE html>
+<%-- <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -26,8 +26,8 @@ if(cookieArr != null){
 </head>
 <body>
 
-<%-- <h3>${sessionScope.memName } 님 로그인! </h3>
- --%>
+<h3>${sessionScope.memName } 님 로그인! </h3>
+
 <h3> 
 ${sessionScope.sessionId}(${sessionScope.sessionName}) 님 반갑습니다!
 </h3>
@@ -39,4 +39,5 @@ ${sessionScope.sessionId}(${sessionScope.sessionName}) 님 반갑습니다!
 	}
 </script>
 </body>
-</html>
+</html> --%>
+success

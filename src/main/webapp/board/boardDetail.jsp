@@ -12,28 +12,31 @@
 <body>
 <div id = "boardListTbl">
 <h3>글 상세보기</h3>
-	 <form name="boardDetailForm">
-	 	<input type="hidden" name="seq" value="${requestScope.rqPage.getSeq()}">
-	 	<input type="hidden" name="updatePg" value="${requestScope.previousPage}">
-	 	
+	 <form name="boardDetailForm" id="boardDetailForm">
+	 	<input type="text" name="seq" id="seq" value="${requestScope.seq}">
+	 	<input type="text" name="pg" id ="pg" value="${requestScope.pg}">
+	 	<input type="text" name="sessionId" id="sessionId" value="${sessionScope.sessionId}">
 		 <table>
-			<tr>
-				<td><h2>${requestScope.rqPage.getSubject()}</h2></td> 
+			<tr> 
+				<td><h2 id = "subject"></h2></td> 
 			</tr>
 		
 			<tr>
 				<td>
 					<div class = "pageInfo">
-						<span class = "seqInfo">글번호 : ${requestScope.rqPage.getSeq()}</span> 
-						<span class = "authorInfo">작성자 :${requestScope.rqPage.getName()}(${requestScope.rqPage.getId()}) </span> 
-						<span class = "hitInfo">조회수 : ${requestScope.rqPage.getHit()}</span> 
+					
+						<span class = "seqInfo">글번호 : <span id = "seqVal"></span> </span>  
+						<span class = "authorInfo"> 작성자 :  <span id = "authorVal"></span></span> 
+						<span class = "hitInfo">조회수 :  <span id = "hitVal"></span></span> 
+						 
+						<!-- 개별식별을 class로 하는 건 별로 좋지 않겠죠 --> 
 			 		</div>
 			 	</td>
 			</tr>
 			 		
 			<tr>
 			 	<td>
-				 	<pre>${requestScope.rqPage.getContent()}</pre>
+				 	<pre id="contentPre"></pre>
 				</td>
 			</tr>
 		</table>
@@ -42,68 +45,17 @@
 				<span class = "toList"><input type = "button" value = "목록" onclick="mode(4)">
 					<input type="button" value="답글" onclick="mode(3)")>
 				</span>
-				<c:if test = "${requestScope.rqPage.getId() == sessionScope.sessionId}">
-					<span class = "updel" >
-						<input type = "button" value = "수정" onclick="mode(1)">
-						<input type = "button" value = "삭제" onclick="mode(2)"> 	
+				
+				<span class = "updel" >
+					<input type = "button" value = "수정" id="boardUpdateButton">
+					<input type = "button" value = "삭제" id="boardDeleteButton"> 	
+					
+				</span>
 						
-					</span>
-				</c:if>
-				<c:if test = "${requestScope.rqPage.getId() != sessionScope.sessionId}">
-					<span style = "float:right;"> 본인의 글만 수정삭제가 가능합니다. </span> 
-				</c:if>		
 			</div>
 	</form>
 </div>
-	<script type="text/javascript">
-	
-		/* post방식으로 넘겨주기 */
-		function boardDetailSubmit(actionPath){
-			document.boardDetailForm.method = "post";
-			document.boardDetailForm.action = actionPath;
-			document.boardDetailForm.submit();
-		}
-		
-		function mode(num){
-			if(num ==1){
-				let actionPath = "/miniPJ/board/boardUpdateForm.do";
-				boardDetailSubmit(actionPath);
-				
-				/* document.boardDetailForm.method = "post";
-				document.boardDetailForm.action = "/miniPJ/board/boardUpdateForm.do";
-				document.boardDetailForm.submit(); */
-			}else if(num ==2 ){
-				if(confirm("정말로 삭제하시겠습니까?")){
-					let actionPath = "/miniPJ/board/boardDelete.do";
-					boardDetailSubmit(actionPath);
-					
-/* 					document.boardDetailForm.method = "post";
-					document.boardDetailForm.action = "/miniPJ/board/boardDelteForm.do";
-					document.boardDetailForm.submit();
- */				}
-			}else if(num == 3){
-				let actionPath = "/miniPJ/board/boardReplyForm.do";
-				boardDetailSubmit(actionPath);
-				
-				/* document.boardDetailForm.method = "post";
-				document.boardDetailForm.action = "/miniPJ/board/boardReplyForm.do";
-				document.boardDetailForm.submit();
-			 	*/
-			 }else if(num == 4){
-				let actionPath = "/miniPJ/board/boardList.do?pg=${requestScope.previousPage}";
-				boardDetailSubmit(actionPath);
-				
-				/* document.boardDetailForm.method = "post";
-				document.boardDetailForm.action = "/miniPJ/board/boardList.do";
-				document.boardDetailForm.submit();
-			 	*/
-			 }else{
-				alert('javascript something wrong..!');
-			}
-		}
-		
-	</script>
-	
-
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="http://localhost:8080/miniPJ/script/boardDetail.js"></script>
 </body>
 </html>

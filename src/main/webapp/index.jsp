@@ -4,7 +4,9 @@
     
 <!DOCTYPE html>
 <html>
-
+<c:if test="${not empty sessionId}">
+	<input type="hidden" value ="sessionAccess" id="loginAjax"> 	
+</c:if>
 <head>
 <meta charset="UTF-8">
 <link rel = "stylesheet" type = "text/css" href = "/miniPJ/css/cssIndex.css">
@@ -20,10 +22,7 @@
 
 <div id="container">
 	   <div id="nav">
-	   		<jsp:include page = "./main/navigation.jsp"></jsp:include>
-	   		<c:if test="${not empty navDisplay}">
-	   			<jsp:include page = "${navDisplay}"></jsp:include>
-	   		</c:if>
+	   		<jsp:include page="./main/navigation.jsp"></jsp:include>
 	   	</div>
 	   	
 		<div id="section">	
@@ -56,6 +55,7 @@
 		document.getElementById("id").focus();
 	}
 </script>
+
 
 </body>
 </html>

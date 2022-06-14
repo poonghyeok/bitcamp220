@@ -2,8 +2,9 @@
 body {
    margin: 0; /* 바깥쪽여백 */
    padding: 0; /* 안쪽여백 */
-   height: 100%;
    width: auto;
+   height: 100%;
+   
 }
 
 #header {
